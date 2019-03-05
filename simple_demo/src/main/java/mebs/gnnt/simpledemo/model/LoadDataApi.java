@@ -2,7 +2,6 @@ package mebs.gnnt.simpledemo.model;
 
 import io.reactivex.Single;
 import mebs.gnnt.simpledemo.model.dto.ZhuHuDTO;
-import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 
 /*******************************************************************

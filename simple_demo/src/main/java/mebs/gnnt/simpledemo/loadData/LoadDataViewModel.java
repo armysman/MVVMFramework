@@ -7,7 +7,11 @@ import java.util.concurrent.TimeUnit;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import gnnt.mebs.base.component.BaseViewModel;
+import gnnt.mebs.base.http.HttpException;
+import io.reactivex.Single;
+import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import mebs.gnnt.simpledemo.model.LoadDataApi;
 import mebs.gnnt.simpledemo.model.dto.ZhuHuDTO;
@@ -52,6 +56,7 @@ public class LoadDataViewModel extends BaseViewModel {
         LoadDataApi api = getApplication().getRetrofitManager().getApi(LoadDataApi.ZHU_HU_HOST, LoadDataApi.class);
         api.getZhuHuData()
                 .delay(3, TimeUnit.SECONDS) // 延迟3秒
+                .onErrorResumeNext(Single.<ZhuHuDTO.Response>error(new HttpException("网络错误")))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mDataObserver);

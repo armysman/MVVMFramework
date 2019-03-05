@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import gnnt.mebs.base.R;
 import gnnt.mebs.base.liveData.SingleLiveData;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.CompositeDisposable;
@@ -59,7 +59,7 @@ public class BaseViewModel extends AndroidViewModel {
     /**
      * 是否正在加载中
      */
-    protected MutableLiveData<Integer> mLoadStatusSpec = new MutableLiveData<>();
+    protected SingleLiveData<Integer> mLoadStatusSpec = new SingleLiveData<>();
 
 
     public BaseViewModel(@NonNull Application application) {
@@ -176,7 +176,7 @@ public class BaseViewModel extends AndroidViewModel {
         public void onError(Throwable e) {
             loadStatus = LOAD_ERROR;
             if (dispatchErrorToView()) {
-                setMessage(e.getMessage());
+                setMessage(getErrorMessage());
             }
             if (dispatchStatusToView()) {
                 setLoadStatus(loadStatus, getRequestCode());
@@ -208,6 +208,15 @@ public class BaseViewModel extends AndroidViewModel {
          */
         public int getRequestCode() {
             return LoadStatusSpec.DEFAULT_REQUEST_CODE;
+        }
+
+        /**
+         * 返回网络错误消息
+         *
+         * @return 错误消息
+         */
+        public String getErrorMessage() {
+            return getApplication().getString(R.string.network_error_default);
         }
     }
 

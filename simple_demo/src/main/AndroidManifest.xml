@@ -3,10 +3,8 @@
 
     <application>
         <activity
-            android:name=".loadData.LoadDataActivity"
-            android:screenOrientation="portrait" />
+            android:name=".loadData.LoadDataActivity" />
         <activity
-            android:name=".dataBinding.DataBindingActivity"
-            android:screenOrientation="portrait" />
+            android:name=".dataBinding.DataBindingActivity" />
     </application>
 </manifest>

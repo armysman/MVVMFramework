@@ -6,7 +6,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import gnnt.mebs.base.component.BaseViewModel;
-import mebs.gnnt.simpledemo.loadData.LoadDataViewModel;
 
 /*******************************************************************
  * DataBindingViewModel.java  2019/3/5
