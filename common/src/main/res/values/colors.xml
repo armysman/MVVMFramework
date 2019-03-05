@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFDE00</color>
+    <color name="colorPrimaryDark">#c4ab01</color>
+    <color name="colorAccent">#FFDE00</color>
+
+    <color name="colorDivider">#DDDDDD</color>
+    <color name="colorBackground">#F7F7F7</color>
+
+    <!--字体颜色-->
+    <color name="textColorHint">#A6A6A6</color>
+    <color name="textColorBlack">#333333</color>
+    <color name="textColorDarkGray">#4C4C4C</color>
+    <color name="textColorGray">#8B8B8B</color>
+    <color name="textColorPrice">#FF680E</color>
+
+    <!--界面相关-->
+    <color name="searchBackground">#CCFFFFFF</color>
+
+    <color name="tabColor">#FFB30F</color>
+</resources>
