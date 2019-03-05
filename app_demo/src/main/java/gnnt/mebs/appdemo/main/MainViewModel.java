@@ -30,7 +30,8 @@ public class MainViewModel extends BaseViewModel {
     public MainViewModel(@NonNull Application application) {
         super(application);
         mMainMenu.setValue(Arrays.asList(
-                new MainMenu(RouteMap.SimpleDemo.LOAD_DATA_PAGE, "基本数据加载与网络状态切换处理")
+                new MainMenu(RouteMap.SimpleDemo.LOAD_DATA_PAGE, "基本数据加载与网络状态切换处理"),
+                new MainMenu(RouteMap.SimpleDemo.DATA_BINDING_PAGE, "DataBinding的使用")
         ));
     }
 

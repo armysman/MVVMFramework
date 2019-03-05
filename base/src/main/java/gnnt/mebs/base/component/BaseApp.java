@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @author:zhoupeng
  *
  ******************************************************************/
-public class BaseApp extends Application {
+public abstract class BaseApp extends Application {
 
     /**
      * 网络请求管理类
@@ -60,7 +60,7 @@ public class BaseApp extends Application {
         // 初始化网络请求类
         mRetrofitManager = new RetrofitManager(getHttpConverterFactory());
 
-        // 初始化事件管理类
+        // 初始化网络状态事件
         mNetworkStatusEvent = new NetworkStatusEvent(this);
     }
 

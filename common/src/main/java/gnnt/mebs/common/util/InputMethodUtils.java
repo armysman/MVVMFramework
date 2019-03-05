@@ -1,4 +1,4 @@
-package gnnt.mebs.base.util;
+package gnnt.mebs.common.util;
 
 
 import android.content.Context;

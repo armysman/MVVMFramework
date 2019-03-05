@@ -142,9 +142,8 @@ public abstract class BaseActivity<T extends BaseViewModel> extends AppCompatAct
         mViewModel = viewModel;
         // 刷新数据
         mViewModel.refreshDataIfNeed();
-        // 用户登录状态改变提示
-        BaseApp app = mViewModel.getApplication();
 
+        BaseApp app = mViewModel.getApplication();
         // 网络状态改变
         app.getNetworkStatusEvent().observeNetworkStatus(this, new Observer<Integer>() {
             @Override

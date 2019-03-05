@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity<MainViewModel> {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ARouter.getInstance().build(RouteMap.SimpleDemo.LOAD_DATA_PAGE).navigation();
+                ARouter.getInstance().build(mAdapter.getItem(position).routePath).navigation();
             }
         });
     }
