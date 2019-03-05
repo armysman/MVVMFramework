@@ -3,7 +3,6 @@ package gnnt.mebs.base.model;
 import androidx.annotation.MainThread;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -12,21 +11,16 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /*******************************************************************
- * Respository.java 2019/3/5
+ * SimpleRespository.java 2019/3/5
  * <P>
- * 数据仓库基类<br/>
+ * 基于Room的数据仓库基类<br/>
  * <br/>
  * </p>
  * Copyright2017 by GNNT Company. All Rights Reserved.
  *
  * @author:Zhoupeng
  ******************************************************************/
-public abstract class Respository<Data> {
-
-    /**
-     * 缓存的数据对象
-     */
-    private MutableLiveData<Data> mData = new MutableLiveData<>();
+public abstract class RoomRespository<Data> {
 
     /**
      * 远端数据请求开关
@@ -38,7 +32,7 @@ public abstract class Respository<Data> {
      *
      * @return 本地数据异步操作类
      */
-    public abstract Single<Data> loadLocalData();
+    public abstract LiveData<Data> loadLocalData();
 
     /**
      * 保存数据到本地
@@ -80,16 +74,8 @@ public abstract class Respository<Data> {
      */
     @MainThread
     public LiveData<Data> getData(@Nullable final RemoteLoadCallback callback) {
-        // 如果当前数据为空则先加载本地数据
-        if (mData.getValue() == null) {
-            loadLocalData()
-                    .subscribeOn(Schedulers.io()) // IO线程读取本地数据
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new LocalObserver(callback));
-        } else {
-            refreshDataIfNeed(callback);
-        }
-        return mData;
+        refreshDataIfNeed(callback);
+        return loadLocalData();
     }
 
     /**
@@ -111,34 +97,6 @@ public abstract class Respository<Data> {
                     })
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new RemoteObserver(callback));
-        }
-    }
-    /**
-     * 本地数据观察者
-     */
-    public class LocalObserver implements SingleObserver<Data> {
-
-        RemoteLoadCallback callback;
-
-        public LocalObserver(RemoteLoadCallback callback) {
-            this.callback = callback;
-        }
-
-        @Override
-        public void onSubscribe(Disposable d) {
-        }
-
-        @Override
-        public void onSuccess(Data data) {
-            if (data != null) {
-                mData.setValue(data);
-            }
-            // 尝试从远端获取数据
-            refreshDataIfNeed(callback);
-        }
-
-        @Override
-        public void onError(Throwable e) {
         }
     }
 
@@ -167,8 +125,6 @@ public abstract class Respository<Data> {
             if (callback != null) {
                 callback.onComplete();
             }
-            // 通知数据更新
-            mData.setValue(data);
         }
 
         @Override
