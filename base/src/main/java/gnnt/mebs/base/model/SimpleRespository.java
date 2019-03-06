@@ -1,11 +1,16 @@
 package gnnt.mebs.base.model;
 
+import javax.security.auth.callback.Callback;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
 import io.reactivex.SingleObserver;
+import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -26,25 +31,27 @@ public abstract class SimpleRespository<Data> {
     /**
      * 缓存的数据对象
      */
-    private MutableLiveData<Data> mData = new MutableLiveData<>();
+    protected LiveData<Data> mData = new MutableLiveData<>();
 
     /**
      * 远端数据请求开关
      */
-    private Disposable mRemoteDisposable;
+    protected Disposable mRemoteDisposable;
 
     /**
      * 加载本地数据
      *
      * @return 本地数据异步操作类
      */
-    public abstract Single<Data> loadLocalData();
+    @WorkerThread
+    public abstract Data loadLocalData();
 
     /**
      * 保存数据到本地
      *
      * @param data 数据
      */
+    @WorkerThread
     public abstract void saveLocalData(Data data);
 
     /**
@@ -80,15 +87,19 @@ public abstract class SimpleRespository<Data> {
      */
     @MainThread
     public LiveData<Data> getData(@Nullable final RemoteLoadCallback callback) {
-        // 如果当前数据为空则尝试加载本地数据
+        // 如果当前数据为空则先加载本地数据
         if (mData.getValue() == null) {
-            loadLocalData()
-                    .subscribeOn(Schedulers.io()) // IO线程读取本地数据
+            Single.create(new SingleOnSubscribe<Data>() {
+                @Override
+                public void subscribe(SingleEmitter<Data> emitter) throws Exception {
+                    emitter.onSuccess(loadLocalData());
+                }
+            }).subscribeOn(Schedulers.io()) // IO线程读取本地数据
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(mLocalObserver);
+                    .subscribe(new LocalObserver(callback));
+        } else {
+            refreshDataIfNeed(callback);
         }
-        // 从远端更新数据
-        refreshDataIfNeed(callback);
         return mData;
     }
 
@@ -115,9 +126,37 @@ public abstract class SimpleRespository<Data> {
     }
 
     /**
+     * 设置从本地获取的数据
+     *
+     * @param data 数据
+     */
+    protected void updateFromLocal(Data data) {
+        if (data != null && mData instanceof MutableLiveData) {
+            ((MutableLiveData<Data>) mData).postValue(data);
+        }
+    }
+
+    /**
+     * 设置从远端获取的数据
+     *
+     * @param data 数据
+     */
+    protected void updateFromRemote(Data data) {
+        if (mData instanceof MutableLiveData) {
+            ((MutableLiveData<Data>) mData).postValue(data);
+        }
+    }
+
+    /**
      * 本地数据观察者
      */
-    public SingleObserver<Data> mLocalObserver = new SingleObserver<Data>() {
+    public class LocalObserver implements SingleObserver<Data> {
+
+        RemoteLoadCallback callback;
+
+        public LocalObserver(RemoteLoadCallback callback) {
+            this.callback = callback;
+        }
 
         @Override
         public void onSubscribe(Disposable d) {
@@ -125,15 +164,17 @@ public abstract class SimpleRespository<Data> {
 
         @Override
         public void onSuccess(Data data) {
-            if (data != null) {
-                mData.setValue(data);
-            }
+            updateFromLocal(data);
+            // 尝试从远端获取数据
+            refreshDataIfNeed(callback);
         }
 
         @Override
         public void onError(Throwable e) {
+            // 尝试从远端获取数据
+            refreshDataIfNeed(callback);
         }
-    };
+    }
 
     /**
      * 远端数据观察者
@@ -160,8 +201,7 @@ public abstract class SimpleRespository<Data> {
             if (callback != null) {
                 callback.onComplete();
             }
-            // 通知数据更新
-            mData.setValue(data);
+            updateFromRemote(data);
         }
 
         @Override

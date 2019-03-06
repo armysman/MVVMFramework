@@ -12,11 +12,9 @@ import java.lang.reflect.Type;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
 import gnnt.mebs.base.util.FileUtils;
 import gnnt.mebs.base.util.Preconditions;
-import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
-import io.reactivex.SingleOnSubscribe;
 
 /*******************************************************************
  * FileRespository.java  2019/3/6
@@ -93,21 +91,17 @@ public abstract class FileRespository<Data> extends SimpleRespository<Data> {
     }
 
     @Override
-    public Single<Data> loadLocalData() {
-
-        return Single.create(new SingleOnSubscribe<Data>() {
-            @Override
-            public void subscribe(SingleEmitter<Data> emitter) throws Exception {
-                String jsonString = FileUtils.readFileContent(mCacheFile, mEncode);
-                Data data = null;
-                if (!TextUtils.isEmpty(jsonString)) {
-                    data = mGson.fromJson(jsonString, getSuperclassTypeParameter(getClass()));
-                }
-                emitter.onSuccess(data);
-            }
-        });
+    @WorkerThread
+    public Data loadLocalData() {
+        String jsonString = FileUtils.readFileContent(mCacheFile, mEncode);
+        Data data = null;
+        if (!TextUtils.isEmpty(jsonString)) {
+            data = mGson.fromJson(jsonString, getSuperclassTypeParameter(getClass()));
+        }
+        return data;
     }
 
+    @WorkerThread
     @Override
     public void saveLocalData(Data data) {
         String jsonString = "";
