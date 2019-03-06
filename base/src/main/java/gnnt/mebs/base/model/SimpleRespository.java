@@ -80,15 +80,15 @@ public abstract class SimpleRespository<Data> {
      */
     @MainThread
     public LiveData<Data> getData(@Nullable final RemoteLoadCallback callback) {
-        // 如果当前数据为空则先加载本地数据
+        // 如果当前数据为空则尝试加载本地数据
         if (mData.getValue() == null) {
             loadLocalData()
                     .subscribeOn(Schedulers.io()) // IO线程读取本地数据
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new LocalObserver(callback));
-        } else {
-            refreshDataIfNeed(callback);
+                    .subscribe(mLocalObserver);
         }
+        // 从远端更新数据
+        refreshDataIfNeed(callback);
         return mData;
     }
 
@@ -113,16 +113,11 @@ public abstract class SimpleRespository<Data> {
                     .subscribe(new RemoteObserver(callback));
         }
     }
+
     /**
      * 本地数据观察者
      */
-    public class LocalObserver implements SingleObserver<Data> {
-
-        RemoteLoadCallback callback;
-
-        public LocalObserver(RemoteLoadCallback callback) {
-            this.callback = callback;
-        }
+    public SingleObserver<Data> mLocalObserver = new SingleObserver<Data>() {
 
         @Override
         public void onSubscribe(Disposable d) {
@@ -133,14 +128,12 @@ public abstract class SimpleRespository<Data> {
             if (data != null) {
                 mData.setValue(data);
             }
-            // 尝试从远端获取数据
-            refreshDataIfNeed(callback);
         }
 
         @Override
         public void onError(Throwable e) {
         }
-    }
+    };
 
     /**
      * 远端数据观察者

@@ -1,4 +1,4 @@
-package gnnt.mebs.common.util;
+package gnnt.mebs.base.util;
 
 import java.io.Closeable;
 import java.io.File;
@@ -48,7 +48,6 @@ public class FileUtils {
      *
      * @param file    文件
      * @param charset 编码
-     * @throws Exception 异常
      */
     public static String readFileContent(File file, String charset) {
         FileInputStream inputStream = null;
