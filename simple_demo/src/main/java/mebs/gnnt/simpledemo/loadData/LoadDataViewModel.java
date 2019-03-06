@@ -9,12 +9,12 @@ import androidx.lifecycle.MutableLiveData;
 import gnnt.mebs.base.component.BaseViewModel;
 import gnnt.mebs.base.http.HttpException;
 import io.reactivex.Single;
-import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import mebs.gnnt.simpledemo.model.LoadDataApi;
-import mebs.gnnt.simpledemo.model.dto.ZhuHuDTO;
+import mebs.gnnt.simpledemo.model.Config;
+import mebs.gnnt.simpledemo.model.PoemApi;
+import mebs.gnnt.simpledemo.model.dto.Response;
+import mebs.gnnt.simpledemo.model.vo.Poem;
 
 /*******************************************************************
  * LoadDataViewModel.java  2019/3/5
@@ -53,21 +53,25 @@ public class LoadDataViewModel extends BaseViewModel {
         if (mDataObserver.loadStatus == BaseViewModel.LOADING) {
             return;
         }
-        LoadDataApi api = getApplication().getRetrofitManager().getApi(LoadDataApi.ZHU_HU_HOST, LoadDataApi.class);
-        api.getZhuHuData()
+        PoemApi api = getApplication().getRetrofitManager().getApi(Config.HOST, PoemApi.class);
+        api.getRandomPoem()
                 .delay(3, TimeUnit.SECONDS) // 延迟3秒
-                .onErrorResumeNext(Single.<ZhuHuDTO.Response>error(new HttpException("网络错误")))
+                .onErrorResumeNext(Single.<Response<Poem>>error(new HttpException("网络错误")))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mDataObserver);
     }
 
-    protected ViewModelLoadObserver<ZhuHuDTO.Response> mDataObserver = new ViewModelLoadObserver<ZhuHuDTO.Response>() {
+    protected ViewModelLoadObserver<Response<Poem>> mDataObserver = new ViewModelLoadObserver<Response<Poem>>() {
         @Override
-        public void onSuccess(ZhuHuDTO.Response response) {
+        public void onSuccess(Response<Poem> response) {
             super.onSuccess(response);
-            String result = String.format("请求成功，专栏所属人姓名：%s 关注人数:%d", response.author.name, response.followers);
-            LoadDataViewModel.this.result.setValue(result);
+            if (response.code == 200 && response.result != null) {
+                String result = String.format("%s\n%s\n%s", response.result.title,
+                        response.result.authors,
+                        response.result.content.replaceAll("\\|", "\n"));
+                LoadDataViewModel.this.result.setValue(result);
+            }
         }
 
     };
