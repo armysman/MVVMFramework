@@ -10,6 +10,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import gnnt.mebs.base.R;
 import gnnt.mebs.base.liveData.SingleLiveData;
+import io.reactivex.Observer;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -148,7 +149,7 @@ public class BaseViewModel extends AndroidViewModel {
      *
      * @param <T>
      */
-    public abstract class ViewModelLoadObserver<T> implements SingleObserver<T> {
+    public class ViewModelSingleObserver<T> implements SingleObserver<T> {
 
         /**
          * 加载状态
@@ -218,6 +219,84 @@ public class BaseViewModel extends AndroidViewModel {
         public String getErrorMessage() {
             return getApplication().getString(R.string.network_error_default);
         }
+    }
+
+    /**
+     * ViewModel 异步加载使用的observer,可以获取加载状态。
+     * 该类时为了防止重复操作导致多次加载的问题，通过对loadStatus判断，可以避免重复创建加载
+     *
+     * @param <T>
+     */
+    public abstract class ViewModelObserver<T> implements Observer<T> {
+        /**
+         * 加载状态
+         */
+        public int loadStatus = NOT_LOADED;
+
+        @Override
+        public void onSubscribe(Disposable d) {
+            addDisposable(d);
+            loadStatus = LOADING;
+            if (dispatchStatusToView()) {
+                setLoadStatus(loadStatus, getRequestCode());
+            }
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            loadStatus = LOAD_ERROR;
+            if (dispatchErrorToView()) {
+                setMessage(getErrorMessage());
+            }
+            if (dispatchStatusToView()) {
+                setLoadStatus(loadStatus, getRequestCode());
+            }
+        }
+
+        @Override
+        public void onComplete() {
+            loadStatus = LOAD_COMPLETE;
+            if (dispatchStatusToView()) {
+                setLoadStatus(loadStatus, getRequestCode());
+            }
+        }
+
+        /**
+         * 是否将状态分发给View，默认为true
+         *
+         * @return true 是 false 否
+         */
+        public boolean dispatchStatusToView() {
+            return true;
+        }
+
+        /**
+         * 是否将错误消息分发给View，默认为true
+         *
+         * @return true 是 false 否
+         */
+        public boolean dispatchErrorToView() {
+            return true;
+        }
+
+        /**
+         * 加载请求代码，注意必须返回正整数，否则获取请求码将有问题
+         *
+         * @return 正整数，范围为 0 ~ (Integer.MAX_VALUE >> 4 - 1)
+         */
+        public int getRequestCode() {
+            return LoadStatusSpec.DEFAULT_REQUEST_CODE;
+        }
+
+        /**
+         * 返回网络错误消息
+         *
+         * @return 错误消息
+         */
+        public String getErrorMessage() {
+            return getApplication().getString(R.string.network_error_default);
+        }
+
     }
 
     @NonNull

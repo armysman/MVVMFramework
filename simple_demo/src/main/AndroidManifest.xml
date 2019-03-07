@@ -2,9 +2,10 @@
     package="mebs.gnnt.simpledemo">
 
     <application>
-        <activity
-            android:name=".loadData.LoadDataActivity" />
-        <activity
-            android:name=".dataBinding.DataBindingActivity" />
+        <activity android:name=".demo1_loadData.LoadDataActivity" />
+        <activity android:name=".demo2_dataBinding.DataBindingActivity" />
+        <activity android:name=".demo3_fileRepository.FileRepositoryActivity" />
+        <activity android:name=".demo5_pageViewModel.PageActivity" />
+        <activity android:name=".demo4_roomRepository.RoomRepositoryActivity" />
     </application>
 </manifest>

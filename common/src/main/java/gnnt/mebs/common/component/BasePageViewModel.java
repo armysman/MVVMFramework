@@ -24,18 +24,16 @@ import io.reactivex.schedulers.Schedulers;
  * @author:zhoupeng
  *
  ******************************************************************/
-public abstract class BasePageViewModel<Response, Data> extends BaseViewModel {
+public abstract class BasePageViewModel<Data> extends BaseViewModel {
 
-
+    /**
+     * 默认每页条数
+     */
+    public static final int PAGE_SIZE = 10;
     /**
      * 页码
      */
     private int mPageNO;
-
-    /**
-     * 每页条数
-     */
-    private int mPageSize = 20;
 
     /**
      * 数据源
@@ -66,16 +64,16 @@ public abstract class BasePageViewModel<Response, Data> extends BaseViewModel {
      * @param pageNO   页码
      * @param pageSize 每页条数
      */
-    public abstract Single<Response> onLoad(int pageNO, int pageSize);
+    public abstract Single<ListResponse<Data>> onLoad(int pageNO, int pageSize);
 
     /**
-     * 从返回包中解析数据
+     * 重写该方法改变每页请求条数，默认{@link #PAGE_SIZE}条
      *
-     * @param response 返回包
-     * @return 返回包解析结果
+     * @return 请求条数
      */
-    public abstract ListResponse<Data> parseResponse(Response response);
-
+    public int getPageSize() {
+        return PAGE_SIZE;
+    }
 
     /**
      * 获取数据
@@ -129,7 +127,7 @@ public abstract class BasePageViewModel<Response, Data> extends BaseViewModel {
      */
     public void loadMore() {
         // 加载下一页数据
-        Single<Response> task = onLoad(mPageNO + 1, mPageSize);
+        Single<ListResponse<Data>> task = onLoad(mPageNO + 1, getPageSize());
         if (task != null && mRequestObserver.loadStatus != BaseViewModel.LOADING) {
             task.subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -140,14 +138,13 @@ public abstract class BasePageViewModel<Response, Data> extends BaseViewModel {
     /**
      * 请求结果监听
      */
-    public ViewModelLoadObserver<Response> mRequestObserver = new ViewModelLoadObserver<Response>() {
+    public ViewModelSingleObserver<ListResponse<Data>> mRequestObserver = new ViewModelSingleObserver<ListResponse<Data>>() {
 
         @Override
-        public void onSuccess(Response response) {
-            super.onSuccess(response);
+        public void onSuccess(ListResponse<Data> listResponse) {
+            super.onSuccess(listResponse);
             // 将返回的数据解析后添加到末尾
             List<Data> dataList = mData.getValue();
-            ListResponse listResponse = parseResponse(response);
             if (listResponse != null) {
                 // 如果请求页码为0，则说明是刷新
                 if (mPageNO == 0) {

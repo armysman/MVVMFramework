@@ -25,4 +25,23 @@ public class Response<T> {
      * 返回内容
      */
     public T result;
+
+    public Response() {
+    }
+
+    public Response(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    /**
+     * 返回一个默认错误的返回包
+     *
+     * @param message 错误消息
+     * @param <T>
+     * @return
+     */
+    public static <T> Response<T> defaultError(String message) {
+        return new Response<T>(-1, message);
+    }
 }

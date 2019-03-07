@@ -23,10 +23,22 @@ public interface RouteMap {
          * 数据绑定演示
          */
         String DATA_BINDING_PAGE = "/simple/DataBindingPage";
+
+        /**
+         * 文件缓存演示
+         */
+        String FILE_REPOSITORY_PAGE = "/simple/FileRepositoryPage";
+
+        /**
+         * Room数据缓存页
+         */
+        String ROOM_REPOSITORY_PAGE = "/simple/RoomRepositoryPage";
+
+        /**
+         * 分页演示
+         */
+        String PAGE_PAGE = "/simple/PagePage";
     }
-
-
-
 
 
 }

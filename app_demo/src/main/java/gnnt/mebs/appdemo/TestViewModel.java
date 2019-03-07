@@ -33,7 +33,7 @@ public class TestViewModel extends BaseViewModel {
                 .login(loginReq)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ViewModelLoadObserver<LoginDTO.Response>() {
+                .subscribe(new ViewModelSingleObserver<LoginDTO.Response>() {
                     @Override
                     public void onSuccess(LoginDTO.Response response) {
                         super.onSuccess(response);

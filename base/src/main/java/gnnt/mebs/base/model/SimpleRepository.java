@@ -17,7 +17,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /*******************************************************************
- * SimpleRespository.java 2019/3/5
+ * SimpleRepository.java 2019/3/5
  * <P>
  * 数据仓库基类<br/>
  * <br/>
@@ -26,7 +26,7 @@ import io.reactivex.schedulers.Schedulers;
  *
  * @author:Zhoupeng
  ******************************************************************/
-public abstract class SimpleRespository<Data> {
+public abstract class SimpleRepository<Data> {
 
     /**
      * 缓存的数据对象

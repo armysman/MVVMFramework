@@ -2,6 +2,8 @@ package gnnt.mebs.common;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import java.util.HashMap;
+
 import gnnt.mebs.base.component.BaseApp;
 import gnnt.mebs.common.event.LoginUserEvent;
 
@@ -16,7 +18,6 @@ import gnnt.mebs.common.event.LoginUserEvent;
  *
  ******************************************************************/
 public class CommonApp extends BaseApp {
-
 
     /**
      * 登录用户事件类

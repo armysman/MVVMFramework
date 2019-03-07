@@ -17,7 +17,7 @@ import gnnt.mebs.base.util.FileUtils;
 import gnnt.mebs.base.util.Preconditions;
 
 /*******************************************************************
- * FileRespository.java  2019/3/6
+ * FileRepository.java  2019/3/6
  * <P>
  * 文件缓存管理类<br/>
  * </p>
@@ -25,7 +25,7 @@ import gnnt.mebs.base.util.Preconditions;
  * @author:zhoupeng
  *
  ******************************************************************/
-public abstract class FileRespository<Data> extends SimpleRespository<Data> {
+public abstract class FileRepository<Data> extends SimpleRepository<Data> {
 
     /**
      * 默认的编码方式
@@ -35,7 +35,7 @@ public abstract class FileRespository<Data> extends SimpleRespository<Data> {
     /**
      * 缓存文件夹路径
      */
-    public static final String CACHE_DIR = "FileRespository";
+    public static final String CACHE_DIR = "FileRepository";
 
     /**
      * 缓存文件
@@ -57,7 +57,7 @@ public abstract class FileRespository<Data> extends SimpleRespository<Data> {
      * @param context  上下文
      * @param fileName 文件名
      */
-    public FileRespository(@NonNull Context context, String fileName) {
+    public FileRepository(@NonNull Context context, String fileName) {
         this(getCacheDir(context), fileName);
     }
 
@@ -67,7 +67,7 @@ public abstract class FileRespository<Data> extends SimpleRespository<Data> {
      * @param path     路径
      * @param fileName 文件名
      */
-    public FileRespository(@NonNull String path, @NonNull String fileName) {
+    public FileRepository(@NonNull String path, @NonNull String fileName) {
         this(path, fileName, DEFAULT_ENCODE);
     }
 
@@ -78,7 +78,7 @@ public abstract class FileRespository<Data> extends SimpleRespository<Data> {
      * @param fileName 文件名
      * @param encode   编码
      */
-    public FileRespository(@NonNull String path, @NonNull String fileName, @Nullable String encode) {
+    public FileRepository(@NonNull String path, @NonNull String fileName, @Nullable String encode) {
         Preconditions.checkNotNull(path, "保存路径不能为空");
         Preconditions.checkNotNull(fileName, "保存文件名称不能为空");
         this.mCacheFile = new File(path, fileName);

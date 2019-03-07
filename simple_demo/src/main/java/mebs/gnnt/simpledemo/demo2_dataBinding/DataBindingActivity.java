@@ -1,4 +1,4 @@
-package mebs.gnnt.simpledemo.dataBinding;
+package mebs.gnnt.simpledemo.demo2_dataBinding;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 
@@ -37,6 +37,7 @@ public class DataBindingActivity extends BaseActivity<DataBindingViewModel> {
     protected void setupLayout(int layoutRes) {
         mBinding = DataBindingUtil.setContentView(this, layoutRes);
         mBinding.setLifecycleOwner(this);
+        setTitle("DataBinding的使用");
     }
 
     @NonNull

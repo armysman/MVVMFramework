@@ -1,7 +1,6 @@
-package mebs.gnnt.simpledemo.loadData;
+package mebs.gnnt.simpledemo.demo1_loadData;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 
@@ -16,6 +15,8 @@ import gnnt.mebs.base.event.NetworkStatusEvent;
 import gnnt.mebs.common.RouteMap;
 import mebs.gnnt.simpledemo.R;
 import mebs.gnnt.simpledemo.R2;
+import mebs.gnnt.simpledemo.model.vo.Poetry;
+import mebs.gnnt.simpledemo.utils.PoetryUtil;
 
 /*******************************************************************
  * LoadDataActivity.java  2019/3/5
@@ -30,8 +31,28 @@ import mebs.gnnt.simpledemo.R2;
 @Route(path = RouteMap.SimpleDemo.LOAD_DATA_PAGE)
 public class LoadDataActivity extends BaseActivity<LoadDataViewModel> {
 
-    @BindView(R2.id.tv_result)
-    protected TextView mTvResult;
+    /**
+     * 网络状态
+     */
+    @BindView(R2.id.tv_status)
+    protected TextView mTvStatus;
+    /**
+     * 标题
+     */
+    @BindView(R2.id.tv_title)
+    protected TextView mTvTitle;
+
+    /**
+     * 作者
+     */
+    @BindView(R2.id.tv_author)
+    protected TextView mTvAuthor;
+
+    /**
+     * 内容
+     */
+    @BindView(R2.id.tv_content)
+    protected TextView mTvContent;
 
     @Override
     protected int getLayoutResource() {
@@ -45,12 +66,22 @@ public class LoadDataActivity extends BaseActivity<LoadDataViewModel> {
     }
 
     @Override
+    protected void setupView() {
+        super.setupView();
+        setTitle("基本数据加载与网络状态处理");
+    }
+
+    @Override
     protected void setupViewModel(@Nullable LoadDataViewModel viewModel) {
         super.setupViewModel(viewModel);
-        viewModel.getResult().observe(this, new Observer<String>() {
+        viewModel.getResult().observe(this, new Observer<Poetry>() {
             @Override
-            public void onChanged(String s) {
-                mTvResult.setText(s);
+            public void onChanged(Poetry poetry) {
+                if (poetry != null) {
+                    mTvTitle.setText(poetry.title);
+                    mTvAuthor.setText(poetry.authors);
+                    mTvContent.setText(PoetryUtil.formatContent(poetry.content));
+                }
             }
         });
     }
@@ -58,12 +89,8 @@ public class LoadDataActivity extends BaseActivity<LoadDataViewModel> {
     @Override
     protected void onLoadStatusChanged(int status, int requestCode) {
         super.onLoadStatusChanged(status, requestCode);
-        if (status == BaseViewModel.LOADING) {
-            mTvResult.setText("正在加载");
-        } else if (status == BaseViewModel.LOAD_COMPLETE) {
+        if (status == BaseViewModel.LOAD_COMPLETE) {
             showMessage("加载成功");
-        } else if (status == BaseViewModel.LOAD_ERROR) {
-            mTvResult.setText("加载失败");
         }
     }
 
@@ -71,14 +98,15 @@ public class LoadDataActivity extends BaseActivity<LoadDataViewModel> {
     protected void onNetworkStatusChanged(int status) {
         super.onNetworkStatusChanged(status);
         if (status == NetworkStatusEvent.TYPE_NONE) {
-            showMessage("网络似乎断开了");
+            mTvStatus.setText("网络状态：未连接");
         } else {
-            showMessage("网络连接了，触发数据刷新");
+            String type = status == NetworkStatusEvent.TYPE_WIFI ? "WIFI" : "数据流量";
+            mTvStatus.setText(String.format("网络状态：%s", type));
         }
     }
 
     @OnClick(R2.id.btn_load_zhuhu)
     protected void onLoadZhuhuClick() {
-        mViewModel.loadZhuHuData();
+        mViewModel.loadPoetryData();
     }
 }

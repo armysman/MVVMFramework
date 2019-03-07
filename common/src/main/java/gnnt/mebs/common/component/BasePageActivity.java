@@ -5,10 +5,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import gnnt.mebs.base.component.BaseActivity;
 import gnnt.mebs.base.component.BaseViewModel;
+import gnnt.mebs.base.util.Preconditions;
 
 /*******************************************************************
  * BasePageActivity.java  2019/1/4
@@ -26,6 +28,29 @@ public abstract class BasePageActivity<T extends BasePageViewModel> extends Base
      * 适配器
      */
     protected BaseQuickAdapter mAdapter;
+
+    /**
+     * 创建适配器
+     *
+     * @return 适配器
+     */
+    public @NonNull
+    abstract BaseQuickAdapter createAdapter();
+
+    /**
+     * 子类实现绑定适配器等操作
+     *
+     * @param adapter 适配器
+     */
+    public abstract void setupView(BaseQuickAdapter adapter);
+
+    @Override
+    protected final void setupView() {
+        // 创建适配器
+        mAdapter = createAdapter();
+        Preconditions.checkNotNull(mAdapter, "适配器不能为空");
+        setupView(mAdapter);
+    }
 
     @Override
     protected void setupViewModel(@Nullable T viewModel) {
