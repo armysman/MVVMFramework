@@ -38,6 +38,21 @@ public interface RouteMap {
          * 分页演示
          */
         String PAGE_PAGE = "/simple/PagePage";
+
+        /**
+         * 全局事件监听
+         */
+        String GLOBAL_EVENT_PAGE = "/simple/GlobalEventPage";
+
+        /**
+         * 登录
+         */
+        String LOGIN_PAGE = "/simple/LoginPage";
+
+        /**
+         * 注册
+         */
+        String REGISTER_PAGE = "/simple/RegisterPage";
     }
 
 

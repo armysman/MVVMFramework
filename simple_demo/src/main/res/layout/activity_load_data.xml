@@ -15,6 +15,7 @@
         android:id="@+id/btn_load_zhuhu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:text="获取一首随机古诗" />
 
     <TextView

@@ -1,35 +1,34 @@
-package gnnt.mebs.common.vo;
+package mebs.gnnt.simpledemo.model.vo;
+
+import com.google.gson.annotations.SerializedName;
 
 /*******************************************************************
- * LoginUser.java  2019/2/21
+ * User.java  2019/3/7
  * <P>
- * 登录用户<br/>
+ * 用户信息<br/>
  * <br/>
  * </p>
- * Copyright2018 by GNNT Company. All Rights Reserved.
  *
  * @author:zhoupeng
  *
  ******************************************************************/
-public class LoginUser {
+public class User {
 
     /**
      * 用户名
      */
+    @SerializedName("name")
     public String userName;
+
+
     /**
      * 昵称
      */
+    @SerializedName("nikeName")
     public String nickName;
+
     /**
      * 签名
      */
     public String sign;
-
-
-    public LoginUser(String userName, String nickName, String sign) {
-        this.userName = userName;
-        this.nickName = nickName;
-        this.sign = sign;
-    }
 }

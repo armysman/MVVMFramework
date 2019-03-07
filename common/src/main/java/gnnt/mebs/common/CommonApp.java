@@ -1,8 +1,7 @@
 package gnnt.mebs.common;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-
-import java.util.HashMap;
+import com.squareup.leakcanary.LeakCanary;
 
 import gnnt.mebs.base.component.BaseApp;
 import gnnt.mebs.common.event.LoginUserEvent;
@@ -27,6 +26,16 @@ public class CommonApp extends BaseApp {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // 内存泄露检测
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+
+        // 内存泄露检测
+        LeakCanary.install(this);
 
         // ARouter 初始化
         if (BuildConfig.DEBUG) {

@@ -6,8 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import gnnt.mebs.base.component.BaseViewModel;
-import gnnt.mebs.base.http.HttpException;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import mebs.gnnt.simpledemo.model.Config;
@@ -54,7 +52,6 @@ public class LoadDataViewModel extends BaseViewModel {
         }
         OpenApi api = getApplication().getRetrofitManager().getApi(Config.HOST, OpenApi.class);
         api.getRandomPoetry()
-                .onErrorResumeNext(Single.<Response<Poetry>>error(new HttpException("网络错误"))) // 统一错误提示语
                 .subscribeOn(Schedulers.newThread()) // 异步执行
                 .observeOn(AndroidSchedulers.mainThread()) // 主线程回调
                 .subscribe(mDataObserver);

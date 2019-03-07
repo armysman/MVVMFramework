@@ -10,7 +10,7 @@ package mebs.gnnt.simpledemo.model.dto;
  * @author:zhoupeng
  *
  ******************************************************************/
-public class Response<T> {
+public class Response<T extends Object> {
     /**
      * 返回码
      */

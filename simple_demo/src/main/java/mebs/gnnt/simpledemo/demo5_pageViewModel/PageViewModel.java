@@ -4,7 +4,7 @@ import android.app.Application;
 
 import java.util.List;
 
-import gnnt.mebs.base.http.HttpException;
+import gnnt.mebs.base.http.LoadException;
 import gnnt.mebs.common.component.BasePageViewModel;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
@@ -52,7 +52,7 @@ public class PageViewModel extends BasePageViewModel<Poetry> {
                     @Override
                     public ListResponse<Poetry> apply(Response<List<Poetry>> response) throws Exception {
                         if (response.code != 200) {
-                            throw new HttpException(response.message);
+                            throw new LoadException(response.message);
                         }
                         return new ListResponse<>(TOTAL_COUNT, response.result);
                     }

@@ -58,7 +58,7 @@ public class PageActivity extends BasePageActivity<PageViewModel> {
 
     @Override
     public void setupView(BaseQuickAdapter adapter) {
-        setTitle("分页演示");
+        setTitle("PageViewModel分页演示");
         mRvPoetry.setLayoutManager(new LinearLayoutManager(this));
         mRvPoetry.setAdapter(adapter);
         adapter.bindToRecyclerView(mRvPoetry);

@@ -2,6 +2,7 @@ package gnnt.mebs.base.component;
 
 
 import android.app.Application;
+import android.text.TextUtils;
 
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.annotation.StringRes;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import gnnt.mebs.base.R;
+import gnnt.mebs.base.http.LoadException;
 import gnnt.mebs.base.liveData.SingleLiveData;
 import io.reactivex.Observer;
 import io.reactivex.SingleObserver;
@@ -177,7 +179,12 @@ public class BaseViewModel extends AndroidViewModel {
         public void onError(Throwable e) {
             loadStatus = LOAD_ERROR;
             if (dispatchErrorToView()) {
-                setMessage(getErrorMessage());
+                String errorMessage = getErrorMessage();
+                // 如果错误是自定义的加载错误，且错误消息不为空
+                if (e != null && e instanceof LoadException && !TextUtils.isEmpty(e.getMessage())) {
+                    errorMessage = e.getMessage();
+                }
+                setMessage(errorMessage);
             }
             if (dispatchStatusToView()) {
                 setLoadStatus(loadStatus, getRequestCode());
@@ -246,7 +253,12 @@ public class BaseViewModel extends AndroidViewModel {
         public void onError(Throwable e) {
             loadStatus = LOAD_ERROR;
             if (dispatchErrorToView()) {
-                setMessage(getErrorMessage());
+                String errorMessage = getErrorMessage();
+                // 如果错误是自定义的加载错误，且错误消息不为空
+                if (e != null && e instanceof LoadException && !TextUtils.isEmpty(e.getMessage())) {
+                    errorMessage = e.getMessage();
+                }
+                setMessage(errorMessage);
             }
             if (dispatchStatusToView()) {
                 setLoadStatus(loadStatus, getRequestCode());

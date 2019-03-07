@@ -1,12 +1,11 @@
 package mebs.gnnt.simpledemo.model;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import gnnt.mebs.base.http.HttpException;
+import gnnt.mebs.base.http.LoadException;
 import gnnt.mebs.base.model.RoomRepository;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
@@ -57,13 +56,14 @@ public class PoetryRoomRepository extends RoomRepository<List<Poetry>> {
     @Override
     public Single<List<Poetry>> loadRemoteData() {
         return mApi.getRandomPoetry()
+                .onErrorResumeNext(Single.<Response<Poetry>>error(new LoadException("网络出错了")))
                 .map(new Function<Response<Poetry>, List<Poetry>>() {
                     @Override
                     public List<Poetry> apply(Response<Poetry> poetryResponse) throws Exception {
                         if (poetryResponse.code == 200 && poetryResponse.result != null) {
                             return Collections.singletonList(poetryResponse.result);
                         }
-                        throw new HttpException("网络出错了");
+                        throw new LoadException("网络出错了");
                     }
                 });
     }

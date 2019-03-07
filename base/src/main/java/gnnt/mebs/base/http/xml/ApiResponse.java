@@ -4,7 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import gnnt.mebs.base.http.HttpConfig;
-import gnnt.mebs.base.http.HttpException;
+import gnnt.mebs.base.http.LoadException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -79,14 +79,14 @@ public class ApiResponse {
             NodeList repNodeList = root.getElementsByTagName("REP");
 
             if (repNodeList == null || repNodeList.getLength() != 1) {
-                throw new HttpException("没有REP节点，或者REP节点多于1个！");
+                throw new LoadException("没有REP节点，或者REP节点多于1个！");
             }
 
             Element element = (Element) repNodeList.item(0);
             // 获取属性名也就是协议中的协议名称
             String protocolName = element.getAttribute("name");
             if (TextUtils.isEmpty(protocolName)) {
-                throw new HttpException("网络繁忙，请稍等重试!");
+                throw new LoadException("网络繁忙，请稍等重试!");
             }
             //TODO
             // 获取message节点
@@ -96,7 +96,7 @@ public class ApiResponse {
             } else {//新协议走
                 setValueNew(this, element);
             }
-        } catch (HttpException e) {
+        } catch (LoadException e) {
             Log.e(tag, e.getMessage());
             setValueByReflect("-1234567", e.getMessage());
         } catch (Exception e) {

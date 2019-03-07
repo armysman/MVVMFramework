@@ -46,6 +46,10 @@ public class RetrofitManager {
      */
     private Object mLock = new Object();
 
+    /**
+     * 默认主机地址
+     */
+    private String mDefaultHost;
 
     /**
      * 构造方法
@@ -57,6 +61,14 @@ public class RetrofitManager {
         mConvertFactory = converterFactory;
     }
 
+    /**
+     * 设置默认主机地址
+     *
+     * @param defaultHost 默认主机地址
+     */
+    public void setDefaultHost(String defaultHost) {
+        this.mDefaultHost = defaultHost;
+    }
 
     /**
      * 获取 API
@@ -64,7 +76,7 @@ public class RetrofitManager {
      * @return 返回 api 实例
      */
     public <T> T getApi(Class<T> apiClass) {
-        return getApi(null, apiClass);
+        return getApi(mDefaultHost, apiClass);
     }
 
     /**
