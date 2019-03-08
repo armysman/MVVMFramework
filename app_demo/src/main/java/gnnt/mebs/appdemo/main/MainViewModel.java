@@ -35,7 +35,8 @@ public class MainViewModel extends BaseViewModel {
                 new MainMenu(RouteMap.SimpleDemo.FILE_REPOSITORY_PAGE, "FileRepository缓存"),
                 new MainMenu(RouteMap.SimpleDemo.ROOM_REPOSITORY_PAGE, "RoomRepository缓存"),
                 new MainMenu(RouteMap.SimpleDemo.PAGE_PAGE, "PageViewModel分页演示"),
-                new MainMenu(RouteMap.SimpleDemo.GLOBAL_EVENT_PAGE, "全局事件监听")
+                new MainMenu(RouteMap.SimpleDemo.GLOBAL_EVENT_PAGE, "全局事件监听"),
+                new MainMenu(RouteMap.SimpleDemo.DYNAMIC_PARAMS_PAGE, "Activity与Fragment动态传参")
         ));
     }
 

@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="mebs.gnnt.simpledemo.utils.PoetryUtil" />
+        <import type="gnnt.mebs.simpledemo.utils.PoetryUtil" />
 
         <variable
             name="viewModel"
-            type="mebs.gnnt.simpledemo.demo2_dataBinding.DataBindingViewModel" />
+            type="gnnt.mebs.simpledemo.demo2_dataBinding.DataBindingViewModel" />
     </data>
 
 

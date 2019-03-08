@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import gnnt.mebs.base.BaseApp;
 import gnnt.mebs.base.R;
 import gnnt.mebs.base.http.LoadException;
 import gnnt.mebs.base.liveData.SingleLiveData;

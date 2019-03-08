@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="mebs.gnnt.simpledemo.demo6_globalEvent.RegisterViewModel" />
+            type="gnnt.mebs.simpledemo.demo6_globalEvent.RegisterViewModel" />
     </data>
 
     <LinearLayout

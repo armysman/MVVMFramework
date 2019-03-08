@@ -53,4 +53,7 @@ dependencies {
     // Butterknife
     implementation "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
+
+    // BaseRecyclerViewAdapterHelper
+    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$rootProject.baseRecyclerViewAdapterHelperVersion"
 }

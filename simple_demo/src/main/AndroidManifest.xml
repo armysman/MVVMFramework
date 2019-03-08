@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="mebs.gnnt.simpledemo">
+    package="gnnt.mebs.simpledemo">
 
     <application>
         <activity android:name=".demo1_loadData.LoadDataActivity" />
@@ -10,5 +10,6 @@
         <activity android:name=".demo6_globalEvent.GlobalEventActivity" />
         <activity android:name=".demo6_globalEvent.LoginActivity" />
         <activity android:name=".demo6_globalEvent.RegisterActivity" />
+        <activity android:name=".demo7_dynamicParams.DynamicParamsActivity"/>
     </application>
 </manifest>

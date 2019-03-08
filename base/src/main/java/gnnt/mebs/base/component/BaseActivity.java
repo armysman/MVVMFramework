@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.ButterKnife;
+import gnnt.mebs.base.BaseApp;
 import gnnt.mebs.base.event.NetworkStatusEvent;
 import gnnt.mebs.base.util.StatusBarUtils;
 

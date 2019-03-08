@@ -53,6 +53,11 @@ public interface RouteMap {
          * 注册
          */
         String REGISTER_PAGE = "/simple/RegisterPage";
+
+        /**
+         * 动态传参
+         */
+        String DYNAMIC_PARAMS_PAGE = "/simple/DynamicPage";
     }
 
 
