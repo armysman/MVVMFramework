@@ -1,7 +1,5 @@
 package gnnt.mebs.base.model;
 
-import javax.security.auth.callback.Callback;
-
 import androidx.annotation.MainThread;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
@@ -17,7 +15,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /*******************************************************************
- * SimpleRepository.java 2019/3/5
+ * BaseRepository.java 2019/3/5
  * <P>
  * 数据仓库基类<br/>
  * <br/>
@@ -26,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
  *
  * @author:Zhoupeng
  ******************************************************************/
-public abstract class SimpleRepository<Data> {
+public abstract class BaseRepository<Data> {
 
     /**
      * 缓存的数据对象

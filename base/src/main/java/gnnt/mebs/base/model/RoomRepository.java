@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
 /*******************************************************************
- * SimpleRepository.java 2019/3/5
+ * BaseRepository.java 2019/3/5
  * <P>
  * 基于Room的数据仓库基类<br/>
  * <br/>
@@ -16,7 +16,7 @@ import androidx.lifecycle.Observer;
  *
  * @author:Zhoupeng
  ******************************************************************/
-public abstract class RoomRepository<Data> extends SimpleRepository<Data> {
+public abstract class RoomRepository<Data> extends BaseRepository<Data> {
 
 
     /**

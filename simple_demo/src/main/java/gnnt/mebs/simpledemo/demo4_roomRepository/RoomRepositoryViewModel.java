@@ -7,7 +7,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import gnnt.mebs.base.component.BaseViewModel;
-import gnnt.mebs.base.model.SimpleRepository;
+import gnnt.mebs.base.model.BaseRepository;
 import gnnt.mebs.simpledemo.model.Config;
 import gnnt.mebs.simpledemo.model.OpenApi;
 import gnnt.mebs.simpledemo.model.PoetryRoomRepository;
@@ -47,7 +47,7 @@ public class RoomRepositoryViewModel extends BaseViewModel {
         return mRepository.getData();
     }
 
-    SimpleRepository.RemoteLoadCallback loadCallback = new SimpleRepository.RemoteLoadCallback() {
+    BaseRepository.RemoteLoadCallback loadCallback = new BaseRepository.RemoteLoadCallback() {
         @Override
         public void onLoading() {
             setLoadStatus(LOADING, 0);

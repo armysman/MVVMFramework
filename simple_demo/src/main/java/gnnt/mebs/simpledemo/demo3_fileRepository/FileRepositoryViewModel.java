@@ -3,7 +3,7 @@ package gnnt.mebs.simpledemo.demo3_fileRepository;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import gnnt.mebs.base.model.SimpleRepository;
+import gnnt.mebs.base.model.BaseRepository;
 import gnnt.mebs.simpledemo.demo1_loadData.LoadDataViewModel;
 import gnnt.mebs.simpledemo.model.Config;
 import gnnt.mebs.simpledemo.model.OpenApi;
@@ -38,7 +38,7 @@ public class FileRepositoryViewModel extends LoadDataViewModel {
         mRepository.refreshDataIfNeed(loadCallback);
     }
 
-    SimpleRepository.RemoteLoadCallback loadCallback = new SimpleRepository.RemoteLoadCallback() {
+    BaseRepository.RemoteLoadCallback loadCallback = new BaseRepository.RemoteLoadCallback() {
         @Override
         public void onLoading() {
             setLoadStatus(LOADING, 0);

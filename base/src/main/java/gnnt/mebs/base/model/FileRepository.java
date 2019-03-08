@@ -25,7 +25,7 @@ import gnnt.mebs.base.util.Preconditions;
  * @author:zhoupeng
  *
  ******************************************************************/
-public abstract class FileRepository<Data> extends SimpleRepository<Data> {
+public abstract class FileRepository<Data> extends BaseRepository<Data> {
 
     /**
      * 默认的编码方式
