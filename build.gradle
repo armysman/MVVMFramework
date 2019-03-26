@@ -11,18 +11,18 @@ buildscript {
         // 固定依赖库，androidx组件库版本查看 https://developer.android.google.cn/jetpack/androidx/releases/appcompat
         supportVersion = '1.0.0' // 官方support库
         lifecycleVersion = '2.0.0' // lifecycle与viewModel
-        roomVersion = '2.1.0-alpha04' // room 数据库存储
         rxjavaVersion = '2.2.7' // RxJava 2 版本
         rxandroidVersion = '2.1.1' // RxAndroid
-        arouterVersion = "1.4.1" // 阿里 ARouter api
-        arouterCompiler = "1.2.2" // 阿里 ARouter Compiler
-
-        // 可更换的库
         gsonVersion = '2.8.5' // JSON 解析库
         butterknifeVersion = '10.1.0' // 黄油刀
-        glideVersion = '4.9.0'  // Glide 图片加载
         retrofitVersion = '2.5.0' // Retrofit 网络请求库
+
+        // 可更换的库
+        glideVersion = '4.9.0'  // Glide 图片加载
         baseRecyclerViewAdapterHelperVersion = '2.9.42' // Recycler 快速适配器
+        roomVersion = '2.1.0-alpha04' // room 数据库存储
+        arouterVersion = "1.4.1" // 阿里 ARouter api
+        arouterCompiler = "1.2.2" // 阿里 ARouter Compiler
 
         // 测试工具
         leakcanaryVersion = '1.6.2' // leakCanary 内存检测工具
