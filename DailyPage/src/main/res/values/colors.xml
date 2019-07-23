@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#42537F</color>
+    <color name="colorPrimaryDark">#42537F</color>
+    <color name="colorAccent">#D81B60</color>
+    <!-- Common -->
+    <color name="theme">#FFE72F2E</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="red">#FFF24747</color>
+    <color name="red_pressed">#FFD43C3C</color>
+    <color name="blue">#ff4682dc</color>
+    <color name="blue_pressed">#3e74c4</color>
+    <color name="transparent">#00000000</color>
+    <color name="translucence">#20000000</color>
+    <color name="background">#FFEFEFEF</color>
+    <color name="text_black">#FF333333</color>
+    <color name="text_gray">#FF999999</color>
+    <color name="search_gray">#FFEEEEEE</color>
+    <color name="list_click_gray">#FFDEDEDE</color>
+    <color name="divider">#FFDDDDDD</color>
+    <color name="text_empty">#FFBBBBBB</color>
+    <color name="edit_text_gray">#FFDDDDDD</color>
+    <color name="unchecked_gray">#FFBBBBBB</color>
+    <color name="button_gray">#FFCCCCCC</color>
+    <color name="button_gray_pressed">#FFBBBBBB</color>
+    <color name="button_orange">#fdb045</color>
+    <color name="button_orange_pressed">#e7a13f</color>
+    <color name="setting_color">#FF593400</color>
+    <!-- MainActivity -->
+    <color name="main_checked">#FF4169E1</color>
+
+    <!-- EntrustPublishActivity -->
+    <color name="entrust_publish_radio_btn_gray">#FFB5B5B5</color>
+    <!-- StoreFragment -->
+    <color name="store_ptrList_item_textColor">#FF555555</color>
+    <!-- OrderType -->
+    <color name="order_type">#FFF1C232</color>
+    <!-- BargainActivity -->
+    <color name="text_blue">#ff4682dc</color>
+    <color name="text_red">#FFE72F2E</color>
+
+    <!-- EntrustMangeActivity、BargainManageActivity -->
+    <color name="state_orange">#FFF6B300</color>
+    <color name="state_gray">#FFAAACAE</color>
+    <color name="state_green">#FF73A90A</color>
+    <color name="state_red">#FFD75543</color>
+
+    <!-- SecurityPaymentsActivity -->
+    <color name="state_blue">#ff4682dc</color>
+    <color name="state_pink">#FFF36666</color>
+</resources>

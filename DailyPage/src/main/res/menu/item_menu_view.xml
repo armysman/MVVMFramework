@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/current"
+            android:checkable="true"
+            android:icon="@drawable/edit_square"
+            android:title="当前日报"
+            android:checked="true"
+            app:showAsAction="always"/>
+        <item
+            android:id="@+id/history"
+            android:checkable="true"
+            android:icon="@drawable/calendar"
+            android:title="历史日报"
+            app:showAsAction="always"/>
+        <item
+            android:id="@+id/week"
+            android:checkable="true"
+            android:icon="@drawable/carryout"
+            android:title="周报"
+            app:showAsAction="always"/>
+        <item
+            android:id="@+id/retain"
+            android:checkable="true"
+            android:icon="@drawable/sync"
+            android:title="刷新"
+            app:showAsAction="always"/>
+    </group>
+    <item android:title="其他设置">
+        <menu>
+            <item
+                android:id="@+id/change"
+                android:checkable="true"
+                android:icon="@drawable/lock"
+                android:title="修改密码"
+                app:showAsAction="always"/>
+            <item
+                android:id="@+id/logout"
+                android:checkable="true"
+                android:icon="@drawable/poweroff"
+                android:title="退出系统"
+                app:showAsAction="always"/>
+        </menu>
+    </item>
+
+</menu>
